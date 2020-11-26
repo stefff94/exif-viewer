@@ -3,7 +3,7 @@
   <div class="flip-card-front">
     <div class="ui card">
       <div class="content" style="padding: 10px">
-        <img class="ui image" :src="image.src">
+        <img class="ui image" :src="image.src" style="max-height: 380px; height: 38vw;">
       </div>
     </div>
   </div>

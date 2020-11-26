@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import EXIF from 'exif-js';
+
 import HelloWorld from './components/HelloWorld.vue'
 import ImageInput from "@/components/ImageInput";
 import ImageCard from "@/components/ImageCard";
@@ -44,17 +46,21 @@ export default {
       this.images.splice(
           this.images.findIndex(i => i.id === id), 1);
     },
-    addImage(imageSrc) {
+    addImage(image) {
+      this.images.push({
+        id: this.getImageId(),
+        exifData: EXIF.getData(image, () => this.exifData),
+        src: URL.createObjectURL(image)
+      })
+    },
+    getImageId() {
       let maxImageId = 0;
-      if(this.images.length > 0)
+      if (this.images.length > 0) {
         maxImageId = Math.max
             .apply(Math, this.images.map(i => i.id));
-
-      let image = {
-        id: maxImageId + 1,
-        src: imageSrc
       }
-      this.images.push(image);
+
+      return maxImageId;
     }
   }
 }
