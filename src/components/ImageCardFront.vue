@@ -1,5 +1,5 @@
 
-<template>
+<template @rotate="rotate">
   <div class="flip-card-front">
     <div class="ui card">
       <div class="content" style="padding: 10px">
@@ -10,10 +10,49 @@
 </template>
 
 <script>
+import $ from 'jquery';
+
 export default {
   name: "ImageCardFront",
   props: {
     image: {}
+  },
+  data() {
+    return {
+      fixedHeight: true
+    }
+  },
+  methods: {
+    rotate(id) {
+      console.log(id);
+
+      const img = $('.ui.image');
+      const width = img.width();
+      const height = img.height();
+
+      if (this.fixedHeight) {
+        img.css("height", "");
+      } else {
+        img.css("width", "");
+      }
+      this.fixedHeight = !this.fixedHeight;
+
+      if (this.fixedHeight) {
+        img.css("height", width + "px");
+      } else {
+        img.css("width", height + "px");
+      }
+
+
+      /*img.width(height + 'px');
+      img.height(width + 'px');*/
+      img.addClass("rotated");
+    },
+    rotate2() {
+      const img = $('.ui.image');
+      img.addClass("rotated");
+      img.width("500px");
+    }
   }
 }
 </script>
@@ -24,6 +63,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.rotated {
+  transform: rotate(90deg);
 }
 
 </style>

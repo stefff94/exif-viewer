@@ -75,7 +75,7 @@ export default {
 
 .input-text {
   position: relative;
-  z-index: 10002;
+  /*z-index: 10002;*/
   pointer-events: none;
   /*top: -50vw;*/
 }

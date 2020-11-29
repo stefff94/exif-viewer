@@ -3,11 +3,11 @@ import App from './App.vue'
 
 import jQuery from 'jquery'
 import $ from 'jquery'
-import EXIF from "exif-js";
+/*import EXIF from "exif-js";*/
 
 global.jQuery = jQuery
 global.$ = $
-global.EXIF = EXIF
+/*global.EXIF = EXIF*/
 
 require('fomantic-ui/dist/semantic.min.css')
 require('fomantic-ui/dist/semantic.min.js')

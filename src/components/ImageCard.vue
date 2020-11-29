@@ -2,7 +2,7 @@
   <transition name="fade">
     <div class="flip-card">
       <div class="flip-card-inner text-left">
-        <image-card-front :image="image"></image-card-front>
+        <image-card-front ref="cardFront" :image="image"></image-card-front>
         <image-card-back
             :exif-data="image.exifData"
             :id="image.id"
@@ -25,9 +25,17 @@ export default {
   props: {
     image: {}
   },
+  mounted() {
+/*    console.log('url', URL.createObjectURL(this.image.img));
+    console.log('exifdata', this.image.img);*/
+  },
   methods: {
     deleteImage(id) {
       this.$emit("delete", id);
+    },
+    rotate(id) {
+      console.log(id);
+      this.$refs.cardFront.rotate(id);
     }
   }
 }
