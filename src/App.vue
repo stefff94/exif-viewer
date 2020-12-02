@@ -1,27 +1,24 @@
 <template>
   <div id="app">
-    <!--<img alt="Vue logo" src="./assets/logo.png">-->
     <HelloWorld msg="Welcome to Exif Viewer App"/>
 
     <image-input class="mt35" @upload="addImage"></image-input>
 
-    <!-- two column stackable -->
-    <div class="ui grid mt35 centered">
+    <div class="ui grid mt45 centered">
       <div class="eight wide widescreen eight
               wide large screen twelve wide computer
-              fourteen wide tablet sixteen wide mobile column"
+              fourteen wide tablet sixteen wide mobile column mb30"
            v-for="image in images"
            v-bind:key="image.id">
-        <div><i class="small ui button top-right" @click="rotate(image.id)">Rotate</i></div>
+        <div>
+          <i class="right floated large icon sync alternate rotate top-right"
+              title="rotate image 90 degrees clockwise"
+              @click="rotate(image.id)">
+
+          </i>
+        </div>
         <image-card :image="image" :ref="image.id" @delete="deleteImage"></image-card>
       </div>
-      <!--<image-card class="eight wide widescreen eight wide large screen twelve wide computer fourteen wide tablet sixteen wide mobile column"
-            v-for="image in images"
-            :image="image"
-            v-bind:key="image.id"
-            @delete="deleteImage"
-            style="margin-bottom: 20px!important;">
-      </image-card>-->
     </div>
   </div>
 </template>
@@ -82,9 +79,7 @@ export default {
       return maxImageId + 1;
     },
     rotate(id) {
-      /*this.$emit("rotate", id); */
-      console.log(this.$refs[id])
-      this.$refs[id].rotate(id);
+      this.$refs[id][0].rotate();
     }
   }
 }
@@ -104,7 +99,7 @@ export default {
 
 .top-right {
   position: absolute;
-  top: -15px;
+  top: -20px;
   right: 10px;
 }
 

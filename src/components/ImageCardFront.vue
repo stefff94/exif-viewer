@@ -1,9 +1,11 @@
 
-<template @rotate="rotate">
+<template>
   <div class="flip-card-front">
     <div class="ui card">
-      <div class="content" style="padding: 10px">
-        <img class="ui image" :src="image.src" style="max-height: 380px; height: 38vw;">
+      <div class="content">
+        <img class="ui image"
+             :id="'image-' + image.id"
+             :src="image.src">
       </div>
     </div>
   </div>
@@ -19,39 +21,23 @@ export default {
   },
   data() {
     return {
-      fixedHeight: true
+      currentRotationAngle: 0
     }
   },
   methods: {
-    rotate(id) {
-      console.log(id);
+    rotate() {
+      const img = $('#image-' + this.image.id);
 
-      const img = $('.ui.image');
-      const width = img.width();
-      const height = img.height();
+      this.currentRotationAngle += 90;
 
-      if (this.fixedHeight) {
-        img.css("height", "");
-      } else {
-        img.css("width", "");
-      }
-      this.fixedHeight = !this.fixedHeight;
+      img.removeClass("rotated-90")
+      img.removeClass("rotated-180")
+      img.removeClass("rotated-270")
 
-      if (this.fixedHeight) {
-        img.css("height", width + "px");
-      } else {
-        img.css("width", height + "px");
+      if (this.currentRotationAngle % 360 !== 0) {
+        img.addClass("rotated-" + this.currentRotationAngle % 360);
       }
 
-
-      /*img.width(height + 'px');
-      img.height(width + 'px');*/
-      img.addClass("rotated");
-    },
-    rotate2() {
-      const img = $('.ui.image');
-      img.addClass("rotated");
-      img.width("500px");
     }
   }
 }
@@ -63,10 +49,89 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
 }
 
-.rotated {
-  transform: rotate(90deg);
+.ui.image {
+  max-height: 100%
+}
+
+.rotated-180 {
+  transform: rotate(180deg);
+}
+
+@media only screen and (min-width: 980px) {
+  .rotated-90 {
+    transform: rotate(90deg);
+    max-width: 380px !important;
+  }
+
+  .rotated-270 {
+    transform: rotate(270deg);
+    max-width: 380px !important;
+  }
+}
+
+@media only screen and (max-width: 979px) {
+  .rotated-90 {
+    transform: rotate(90deg);
+    max-width: 350px !important;
+  }
+
+  .rotated-270 {
+    transform: rotate(270deg);
+    max-width: 350px !important;
+  }
+}
+
+@media only screen and (max-width: 920px) {
+  .rotated-90 {
+    transform: rotate(90deg);
+    max-width: 330px !important;
+  }
+
+  .rotated-270 {
+    transform: rotate(270deg);
+    max-width: 330px !important;
+  }
+}
+
+@media only screen and (max-width: 860px) {
+  .rotated-90 {
+    transform: rotate(90deg);
+    max-width: 300px !important;
+  }
+
+  .rotated-270 {
+    transform: rotate(270deg);
+    max-width: 300px !important;
+  }
+}
+
+@media only screen and (max-width: 795px) {
+  .rotated-90 {
+    transform: rotate(90deg);
+    max-width: 270px !important;
+  }
+
+  .rotated-270 {
+    transform: rotate(270deg);
+    max-width: 270px !important;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .rotated-90 {
+    transform: rotate(90deg);
+    max-width: 240px !important;
+  }
+
+  .rotated-270 {
+    transform: rotate(270deg);
+    max-width: 240px !important;
+  }
 }
 
 </style>

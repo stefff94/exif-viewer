@@ -46,8 +46,6 @@ export default {
     onFileChange(e) {
       let files = e.target.files || e.dataTransfer.files
 
-      // let src = URL.createObjectURL(files[0]);
-
       this.$emit("upload", files[0]);
     }
   }

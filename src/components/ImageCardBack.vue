@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    <div class="ui modal" v-bind:id="'modal-' + id">
+    <div class="ui modal" :id="'modal-' + id">
       <i class="close icon"></i>
       <div class="header">
         Exif Data Viewer
