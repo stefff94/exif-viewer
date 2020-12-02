@@ -11,20 +11,28 @@
           <div class="description mt30">
             <div class="ui bulleted list">
               <div class="item"
-                   v-for="data in previewExifData"
+                   v-for="data in previewExifDataMap"
                    v-bind:key="data.id">
 
-                <strong>{{ data.property }}</strong> - <span>{{ data.value }}</span>
+                <strong>{{ data[0] }}</strong> - <span>{{ data[1] }}</span>
               </div>
             </div>
           </div>
-          <div class="my-class">
-            <i class="small ui button bottom-right"
+          <div class="bottom-right">
+            <div class="ui black button"
                v-if="mayViewMoreData"
                @click="showAll()">
 
-              View all
-            </i>
+              View all data
+            </div>
+            <a v-if="hasGPSGeolocation"
+               class="ui green right labeled icon button"
+               :href="'https://www.google.com/maps/search/?api=1&query=' + this.exifDataMap.get('GPSLatitude') + ',' + this.exifDataMap.get('GPSLongitude')"
+               target="_blank">
+
+              See in Google Maps
+              <i class="map marker alternate icon"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -38,10 +46,10 @@
         <div class="description">
           <div class="ui bulleted list">
             <div class="item"
-                 v-for="data in parsedExifData"
+                 v-for="data in exifDataMap"
                  v-bind:key="data.id">
 
-              <strong>{{ data.property }}</strong> - {{ data.value }}
+              <strong>{{ data[0] }}</strong> - {{ data[1] }}
             </div>
           </div>
         </div>
@@ -50,6 +58,14 @@
         <div class="ui black deny button">
           Close
         </div>
+        <a v-if="hasGPSGeolocation"
+           class="ui green right labeled icon button"
+           :href="'https://www.google.com/maps/search/?api=1&query=' + this.exifDataMap.get('GPSLatitude') + ',' + this.exifDataMap.get('GPSLongitude')"
+           target="_blank">
+
+          See GPS location in Google Maps
+          <i class="map marker alternate icon"></i>
+        </a>
       </div>
     </div>
   </div>
@@ -67,19 +83,48 @@ export default {
   data() {
     return {
       parsedExifData: [],
-      previewExifData: []
+      previewExifData: [],
+      exifDataMap: null,
+      previewExifDataMap: null
     }
   },
   mounted() {
-    this.parsedExifData = Object.entries(this.exifData)
-        .filter(o => o[1].description !== undefined && o[1].description !== "")
-        .map(o => ({"property": o[0], "value": o[1].description}))
+    // set the exifDataMap Object
+    this.exifDataMap = new Map();
 
-    this.previewExifData = this.parsedExifData.slice(0, 8);
+    Object.entries(this.exifData)
+        .filter(d => d[1].description !== undefined && d[1].description !== "")
+        .forEach(d => this.exifDataMap.set(d[0], d[1].description))
+
+    // set the previewExifDataMap Object
+    this.previewExifDataMap = new Map();
+
+    Array.from(this.exifDataMap.entries())
+        .slice(0, 8)
+        .forEach(d => this.previewExifDataMap.set(d[0], d[1]))
   },
   computed: {
     mayViewMoreData() {
-      return this.parsedExifData.length > this.previewExifData.length;
+      let exifDataMapSize;
+      let previewExifDataMapSize;
+      if (this.exifDataMap !== null && this.previewExifDataMap !== null) {
+        exifDataMapSize = this.exifDataMap.size;
+        previewExifDataMapSize = this.previewExifDataMap.size;
+      }
+
+      return exifDataMapSize !== undefined
+          && previewExifDataMapSize !== undefined
+          && exifDataMapSize > previewExifDataMapSize;
+    },
+    hasGPSGeolocation() {
+      let GPSLatitude;
+      let GPSLongitude;
+      if (this.exifDataMap !== null) {
+        GPSLatitude = this.exifDataMap.get("GPSLatitude");
+        GPSLongitude = this.exifDataMap.get("GPSLongitude")
+      }
+
+      return GPSLatitude !== undefined && GPSLongitude !== undefined;
     }
   },
   methods: {
