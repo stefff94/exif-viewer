@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <HelloWorld msg="Welcome to Exif Viewer App"/>
+    <HelloWorld class="mt30" msg="Welcome to Exif Viewer App"/>
 
     <image-input class="mt35" @upload="addImage"></image-input>
 
-    <div class="ui grid mt45 centered">
+    <div class="ui grid mt100 centered">
       <div class="eight wide widescreen eight
               wide large screen twelve wide computer
               fourteen wide tablet sixteen wide mobile column mb30"
@@ -41,7 +41,7 @@ export default {
     return {
       images: [],
       reader: FileReader,
-      tmpSrc: null,
+      tmpSrc: null
     }
   },
   mounted() {

@@ -23,14 +23,13 @@
                v-if="mayViewMoreData"
                @click="showAll()">
 
-              View all data
+              All data
             </div>
             <a v-if="hasGPSGeolocation"
-               class="ui green right labeled icon button"
+               class="not-mobile ui green icon button"
                :href="'https://www.google.com/maps/search/?api=1&query=' + this.exifDataMap.get('GPSLatitude') + ',' + this.exifDataMap.get('GPSLongitude')"
                target="_blank">
 
-              See in Google Maps
               <i class="map marker alternate icon"></i>
             </a>
           </div>
@@ -63,7 +62,7 @@
            :href="'https://www.google.com/maps/search/?api=1&query=' + this.exifDataMap.get('GPSLatitude') + ',' + this.exifDataMap.get('GPSLongitude')"
            target="_blank">
 
-          See GPS location in Google Maps
+          See in Google Maps
           <i class="map marker alternate icon"></i>
         </a>
       </div>
@@ -100,7 +99,7 @@ export default {
     this.previewExifDataMap = new Map();
 
     Array.from(this.exifDataMap.entries())
-        .slice(0, 8)
+        .slice(0, 6)
         .forEach(d => this.previewExifDataMap.set(d[0], d[1]))
   },
   computed: {
@@ -144,6 +143,14 @@ export default {
   position: absolute;
   bottom: 10px;
   right: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+
+  .not-mobile {
+    display: none !important;
+  }
+
 }
 
 </style>

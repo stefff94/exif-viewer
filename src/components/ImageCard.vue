@@ -1,20 +1,18 @@
 <template>
-  <transition name="fade">
-    <div class="flip-card">
-      <div class="flip-card-inner text-left">
-        <image-card-front
-            :image="image">
+  <div class="flip-card">
+    <div class="flip-card-inner text-left">
+      <image-card-front
+          :image="image">
 
-        </image-card-front>
-        <image-card-back
-            :exif-data="image.exifData"
-            :id="image.id"
-            @delete="deleteImage">
+      </image-card-front>
+      <image-card-back
+          :exif-data="image.exifData"
+          :id="image.id"
+          @delete="deleteImage">
 
-        </image-card-back>
-      </div>
+      </image-card-back>
     </div>
-  </transition>
+  </div>
 </template>
 
 <script>

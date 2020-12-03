@@ -7,6 +7,7 @@
          @dragenter.stop.prevent="onDragEnter"
          @dragleave.stop.prevent="onDragLeave"
          @drop.stop.prevent="onFileDrop"
+         @click.prevent="onClick"
          v-bind:class="draggingOver ? 'dragover' : ''">
 
       <div class="input-text">
@@ -21,6 +22,7 @@
         <span><strong>Choose a file</strong> or drag it here</span>
       </div>
     </div>
+    <input ref="fileInput" type="file" name="fileInput" accept="image/jpeg" @change="onFileChange" />
   </div>
 </template>
 
@@ -47,6 +49,9 @@ export default {
       let files = e.target.files || e.dataTransfer.files
 
       this.$emit("upload", files[0]);
+    },
+    onClick() {
+      this.$refs.fileInput.click();
     }
   }
 }
@@ -69,13 +74,12 @@ export default {
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  cursor: pointer;
 }
 
 .input-text {
   position: relative;
-  /*z-index: 10002;*/
   pointer-events: none;
-  /*top: -50vw;*/
 }
 
 .icon {
@@ -92,5 +96,8 @@ export default {
   background-color: #fff;
 }
 
+input[type=file] {
+  display: none;
+}
 
 </style>
